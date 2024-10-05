@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doubt Details - DoubtHub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <h1>DoubtHub</h1>
+            <nav>
+                <ul>
+                    <li><a href="dashboard_teacher.html">Dashboard</a></li>
+                    <li><a href="logout.html">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="doubt-details">
+        <h2>Doubt Details</h2>
+        <h3>Title: <span id="doubt-title">[Doubt Title]</span></h3>
+        <p><strong>Description:</strong> <span id="doubt-description">[Doubt Description]</span></p>
+        <p><strong>Subject:</strong> <span id="doubt-subject">[Doubt Subject]</span></p>
+        <p><strong>Status:</strong> <span id="doubt-status">Pending</span></p>
+    </section>
+
+    <section id="solve-doubt">
+        <h3>Solve This Doubt</h3>
+        <form id="solution-form">
+            <label for="solution">Solution</label>
+            <textarea id="solution" name="solution" required></textarea>
+            <button type="submit">Submit Solution</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 DoubtHub. All rights reserved.</p>
+    </footer>
+</body>
+</html>

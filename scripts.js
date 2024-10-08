@@ -7,17 +7,18 @@ function validateForm(event) {
 
     inputs.forEach((input) => {
         if (input.value.trim() === '') {
-            input.style.borderColor = 'red';
+            input.style.borderColor = 'red'; // Highlight empty fields
             valid = false;
         } else {
-            input.style.borderColor = '#ddd';
+            input.style.borderColor = '#ddd'; // Reset border color
         }
     });
 
     if (valid) {
         alert("Form submitted successfully!");
         // Handle the form submission (e.g., using AJAX or redirect)
-        event.target.submit(); // Uncomment if using standard form submission
+        // Uncomment the following line if using standard form submission
+        // event.target.submit();
     } else {
         alert("Please fill out all the fields.");
     }
@@ -30,24 +31,26 @@ function handleRegistration(event) {
 
 // Function to handle feedback form submission
 function handleFeedback(event) {
+    // Validate form first
     validateForm(event);
-    const rating = document.getElementById('rating').value;
-    const comments = document.getElementById('comments').value;
+    const rating = document.getElementById('rating') ? document.getElementById('rating').value : '';
+    const comments = document.getElementById('comments') ? document.getElementById('comments').value : '';
 
+    // Check for rating and comments
     if (rating === '' || comments.trim() === '') {
         alert('Please provide both a rating and comments.');
         return;
     }
 
     // Process feedback data (send to server)
-    alert(Thank you for your feedback! Rating: ${rating});
+    alert('Thank you for your feedback! Rating: ${rating}');
 }
 
 // Function to handle solution submission and mark doubt as solved
 function submitSolution(event) {
     event.preventDefault();
     
-    const solution = document.getElementById('solution').value;
+    const solution = document.getElementById('solution') ? document.getElementById('solution').value : '';
     if (solution.trim() === '') {
         alert('Please enter a solution before submitting.');
         return;
@@ -55,7 +58,9 @@ function submitSolution(event) {
 
     // Mark doubt as solved (you can integrate this with your backend)
     const doubtStatus = document.getElementById('doubt-status');
-    doubtStatus.textContent = 'Solved';
+    if (doubtStatus) {
+        doubtStatus.textContent = 'Solved';
+    }
 
     alert('Solution submitted successfully.');
 }

@@ -1,0 +1,62 @@
+const express = require('express');
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin SDK (Make sure you have your Firebase credentials)
+const serviceAccount = require('./path-to-your-firebase-adminsdk.json'); // Update with the correct path
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+const db = admin.firestore();
+
+const app = express();
+app.use(express.json()); // To handle JSON request body
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+// API to post a new doubt
+app.post('/doubt', async (req, res) => {
+  try {
+    const { studentName, doubt, subject } = req.body;
+
+    if (!studentName || !doubt || !subject) {
+      return res.status(400).send({ message: 'All fields are required' });
+    }
+
+    const doubtData = {
+      studentName,
+      doubt,
+      subject,
+      status: 'unresolved',
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    };
+
+    const docRef = await db.collection('doubts').add(doubtData);
+
+    res.status(201).send({ message: 'Doubt posted successfully', id: docRef.id });
+  } catch (error) {
+    console.error("Error posting doubt:", error);
+    res.status(500).send({ message: 'Internal Server Error' });
+  }
+});
+
+// API to fetch all doubts
+app.get('/doubts', async (req, res) => {
+  try {
+    const doubtsSnapshot = await db.collection('doubts').get();
+    const doubtsList = doubtsSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    res.status(200).send(doubtsList);
+  } catch (error) {
+    console.error("Error fetching doubts:", error);
+    res.status(500).send({ message: 'Internal Server Error' });
+  }
+});
